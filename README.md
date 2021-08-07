@@ -1,4 +1,4 @@
-
+A collection of loggers for different environments
 
 ## Installation
 

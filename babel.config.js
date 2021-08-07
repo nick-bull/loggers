@@ -1,11 +1,13 @@
-import packageConfig from './package.json';
+import {sync as loadJson} from 'load-json-file';
 
 /** 
  * Converts the "imports" entry of the root-level ./package.json to aliases
  * for use in the `babel-plugin-module-resolver` babel plugin
  */
 const fetchPackageImportsAsAliasMap = () => {
-  const imports = packageConfig.imports;
+  const rootPackageInfo = loadJson('./package.json');
+
+  const imports = rootPackageInfo.imports;
   const importEntries = Object.entries(imports);
 
   const removeTrailingExpansion = (item) => item.replace(/\/\*$/, '');

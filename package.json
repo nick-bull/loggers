@@ -1,16 +1,25 @@
 {
   "name": "@nick-bull/loggers",
   "type": "module",
-  "main": "./src/index.js",
+  "main": "lib/index.js",
   "imports": {
     "#root": "./src",
-    "#root/*": "./src/*"
+    "#root/*": "./src/*",
+    "#packages": "./src/packages",
+    "#packages/*": "./src/packages/*",
+    "#console": "./src/console",
+    "#console/*": "./src/console/*",
+    "#terminal": "./src/terminal",
+    "#terminal/*": "./src/terminal/*",
+    "#browser": "./src/browser",
+    "#browser/*": "./src/browser/*"
   },
   "exports": {
-    "import": "./src/index.js",
-    "require": "./lib/index.js"
+    "./console": "./lib/console/index.js",
+    "./terminal": "./lib/terminal/index.js",
+    "./browser": "./lib/browser/index.js"
   },
-  "description": "",
+  "description": "A collection of loggers for different environments",
   "version": "0.0.0",
   "author": {
     "name": "Nick Bull",
@@ -31,8 +40,8 @@
   },
   "homepage": "https://github.com/nick-bull/loggers#readme",
   "scripts": {
-    "build": "NODE_OPTIONS=--experimental-json-modules babel src --out-dir lib",
-    "dev": "node --experimental-json-modules --es-module-specifier-resolution=node src/index.js",
+    "build": "babel src --out-dir lib",
+    "dev": "node --es-module-specifier-resolution=node src/index.js",
     "start": "node lib/index.js",
     "gh:push": "git push -u origin master",
     "prepublishOnly": "npm run build",
@@ -40,14 +49,16 @@
     "publish:patch": "npm run eslint && npm version patch && npm run publish:public",
     "publish:minor": "npm run eslint && npm version minor && npm run publish:public",
     "publish:major": "npm run eslint && npm version major && npm run publish:public",
-    "lint": "npx eslint **/src/**/*.js",
-    "lint:files": "npm run eslint | grep ^[\\w/].*\\.js",
     "test": "jest --verbose --coverage --passWithNoTests",
     "test:update": "npm test --updateSnapshot",
     "test:watch": "jest --verbose --watch",
-    "test:coverage": "npm test && open ./coverage/lcov-report/index.html"
+    "test:coverage": "npm test && open ./coverage/lcov-report/index.html",
+    "eslint": "npx eslint **/src/**/*.js",
+    "eslint:files": "npm run eslint | grep ^[\\w/].*\\.js"
   },
-  "dependencies": {},
+  "dependencies": {
+    "color": "^4.0.1"
+  },
   "devDependencies": {
     "@babel/cli": "^7.13.10",
     "@babel/core": "^7.13.10",
@@ -56,10 +67,8 @@
     "@babel/runtime": "^7.13.10",
     "babel-jest": "^26.6.3",
     "babel-plugin-module-resolver": "^4.1.0",
-    "eslint": "^7.32.0",
-    "eslint-config-airbnb-base": "^14.2.1",
-    "eslint-plugin-import": "^2.23.4",
     "jest": "^26.6.3",
+    "load-json-file": "^6.2.0",
     "prettier": "^2.2.1"
   },
   "jest": {
