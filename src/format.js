@@ -11,7 +11,7 @@ export const defaultColors = {
   green: '#01F494',
 };
 
-export const defaultMessageColors = {
+export const defaultTextColors = {
   debug: defaultColors.whiteGray,
   error: defaultColors.red,
   http: defaultColors.blue,
@@ -22,7 +22,7 @@ export const defaultMessageColors = {
   verbose: defaultColors.gray,
   warn: defaultColors.yellow,
 };
-export const defaultLevelColors = {
+export const defaultBackgroundColors = {
   debug: defaultColors.darkGray,
   error: defaultColors.yellow,
   http: defaultColors.darkBlue,
@@ -34,7 +34,7 @@ export const defaultLevelColors = {
 };
 
 export const defaultTextFormat = {
-  textColor: defaultMessageColors.lightGray,
+  textColor: defaultTextColors.lightGray,
 };
 export const defaultLevelFormat = {
   textColor: defaultColors.darkGray,

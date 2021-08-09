@@ -23,6 +23,7 @@ export const createConsoleLogger = createLogger((parent) => ({
     applyFormats,
     bold,
     backgroundColor,
+    invertColors,
     textColor,
   } = {},
   logMethod,
@@ -37,7 +38,7 @@ export const createConsoleLogger = createLogger((parent) => ({
     isPrinted = true,
     transformers: levelTransformers = [
       formatLevelMessage,
-      applyFormats(bold, backgroundColor(), textColor()),
+      applyFormats(bold, textColor(), invertColors),
     ],
   } = {},
 } = {}) => {

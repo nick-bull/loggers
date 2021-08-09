@@ -1,9 +1,9 @@
 import {toRgb} from '#packages/color-utils';
-import {defaultLevelColors, defaultMessageColors} from '#root/format';
+import {defaultBackgroundColors, defaultTextColors} from '#root/format';
 
 export const createTerminalFormatter = (
-  levelColors = defaultLevelColors,
-  messageColors = defaultMessageColors,
+  backgroundColors = defaultBackgroundColors,
+  textColors = defaultTextColors,
 ) => {
   const resetFormat = '\x1b[0m';
 
@@ -34,18 +34,20 @@ export const createTerminalFormatter = (
 
   const textColor = (color) => (info) => {
     const {mode} = info;
-    const resolvedColor = color || messageColors[mode];
+    const resolvedColor = color || textColors[mode];
 
     const [r, g, b] = toRgb(resolvedColor);
     return prependFormatMessage(info, `38;2;${r};${g};${b}`);
   };
+
   const backgroundColor = (color) => (info) => {
     const {mode} = info;
-    const resolvedColor = color || levelColors[mode];
+    const resolvedColor = color || backgroundColors[mode];
 
     const [r, g, b] = toRgb(resolvedColor);
     return prependFormatMessage(info, `48;2;${r};${g};${b}`);
   };
+  const invertColors = (info) => prependFormatMessage(info, '7');
 
   const applyFormats = (...formats) => (info = {}) => {
     const composedFormats = formats.reduce(
@@ -62,6 +64,7 @@ export const createTerminalFormatter = (
 
     textColor,
     backgroundColor,
+    invertColors,
 
     applyFormats,
 

@@ -1,5 +1,6 @@
 {
   "name": "@nick-bull/loggers",
+  "description": "A collection of loggers for different environments",
   "type": "module",
   "main": "lib/index.js",
   "imports": {
@@ -19,7 +20,6 @@
     "./terminal": "./lib/terminal/index.js",
     "./browser": "./lib/browser/index.js"
   },
-  "description": "A collection of loggers for different environments",
   "version": "0.0.0",
   "author": {
     "name": "Nick Bull",
