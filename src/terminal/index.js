@@ -6,7 +6,11 @@ const terminalLog = (messageInfo, levelInfo) => {
   const {messages: levelMessages} = levelInfo;
   const {messages} = messageInfo;
 
-  const message = messages.join(' ');
+  const processedMessages = messages.map(message =>
+    typeof message === 'object' ? JSON.stringify(message) : message
+  );
+
+  const message = processedMessages.join(' ');
   const levelMessage = levelMessages.join('');
 
   console[mode](`${levelMessage}${message}`);
