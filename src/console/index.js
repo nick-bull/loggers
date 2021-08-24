@@ -43,11 +43,26 @@ export const createConsoleLogger = createLogger((parent) => ({
   } = {},
 } = {}) => {
   const {state: {logLevel}} = parent;
+  const state = {};
 
   const isOccludedLogMode = createModeOcclusionValidator(
     includeModes,
     excludeModes,
   );
+
+  const addLevelFormat = (...formats) => {
+    levelTransformers.unshift(applyFormats(...formats));
+  };
+  const clearLevelFormats = () => {
+    levelTransformers.length = 0;
+  };
+
+  const addMessageFormat = (...formats) => {
+    transformers.unshift(applyFormats(...formats));
+  };
+  const clearMessageFormats = () => {
+    transformers.length = 0;
+  };
 
   const createLogMethod = (mode) => (...messages) => {
     const {level, method} = logModeInfo[mode];
@@ -85,6 +100,15 @@ export const createConsoleLogger = createLogger((parent) => ({
     {},
   );
 
-  return {...parent, ...logMethods};
+  return {
+    ...parent,
+    ...logMethods,
+
+    addLevelFormat,
+    clearLevelFormats,
+
+    addMessageFormat,
+    clearMessageFormats,
+  };
 });
 

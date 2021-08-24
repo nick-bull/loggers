@@ -1,3 +1,5 @@
+import util from 'util';
+
 import {createConsoleLogger} from '#console';
 import {terminalFormatter} from '#terminal/format';
 import {createLog} from '#root';
@@ -7,7 +9,9 @@ const terminalLog = (messageInfo, levelInfo) => {
   const {mode, messages} = messageInfo;
 
   const processedMessages = messages.map(message =>
-    typeof message === 'object' ? JSON.stringify(message) : message
+    typeof message === 'object' 
+      ? util.inspect(message, {showHidden: false, depth: null})
+      : message
   );
 
   const message = processedMessages.join(' ');

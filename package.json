@@ -2,6 +2,7 @@
   "name": "@nick-bull/loggers",
   "description": "A collection of loggers for different environments",
   "type": "module",
+  "extension": "js",
   "main": "lib/index.js",
   "imports": {
     "#root": "./src",
@@ -16,9 +17,13 @@
     "#browser/*": "./src/browser/*"
   },
   "exports": {
+    "./transformers": "./lib/transformers.js",
     "./console": "./lib/console/index.js",
+    "./console/*": "./lib/console/*",
     "./terminal": "./lib/terminal/index.js",
-    "./browser": "./lib/browser/index.js"
+    "./terminal/*": "./lib/terminal/*",
+    "./browser": "./lib/browser/index.js",
+    "./browser/*": "./lib/browser/*"
   },
   "version": "0.0.0",
   "author": {

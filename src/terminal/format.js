@@ -5,9 +5,10 @@ export const createTerminalFormatter = (
   backgroundColors = defaultBackgroundColors,
   textColors = defaultTextColors,
 ) => {
-  const resetFormat = '\x1b[0m';
-
   const createFormat = (format) => `\x1b[${format}m`;
+
+  const resetFormat = createFormat(0);
+
   const appendMessage = (info, message) => {
     const {messages} = info;
 
@@ -24,6 +25,30 @@ export const createTerminalFormatter = (
       messages: [message, ...messages],
     };
   };
+
+  const lowercase = (info) => {
+    const {messages} = info;
+    const lowercaseMessages = messages.map(message => String(message).toLowerCase());
+
+    return {
+      ...info,
+      messages: lowercaseMessages
+    };
+  };
+
+  const uppercase = (info) => {
+    const {messages} = info;
+    const uppercaseMessages = messages.map(message => String(message).toUpperCase());
+
+    return {
+      ...info,
+      messages: uppercaseMessages
+    };
+  };
+
+  const appendFormatMessage = (info, message) => {
+    return appendMessage(info, createFormat(message));
+  };
   const prependFormatMessage = (info, message) => {
     return prependMessage(info, createFormat(message));
   };
@@ -35,6 +60,8 @@ export const createTerminalFormatter = (
   const textColor = (color) => (info) => {
     const {mode} = info;
     const resolvedColor = color || textColors[mode];
+
+    // console.log(` - Applying color '${color}'`);
 
     const [r, g, b] = toRgb(resolvedColor);
     return prependFormatMessage(info, `38;2;${r};${g};${b}`);
@@ -58,6 +85,12 @@ export const createTerminalFormatter = (
   };
 
   return {
+    appendMessage,
+    prependMessage,
+
+    uppercase,
+    lowercase,
+
     bold,
     italic,
     underline,
