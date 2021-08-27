@@ -7,8 +7,6 @@
   "imports": {
     "#root": "./src",
     "#root/*": "./src/*",
-    "#packages": "./src/packages",
-    "#packages/*": "./src/packages/*",
     "#console": "./src/console",
     "#console/*": "./src/console/*",
     "#terminal": "./src/terminal",

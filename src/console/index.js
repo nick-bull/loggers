@@ -53,14 +53,21 @@ export const createConsoleLogger = createLogger((parent) => ({
   const addLevelFormat = (...formats) => {
     levelTransformers.unshift(applyFormats(...formats));
   };
-  const clearLevelFormats = () => {
-    levelTransformers.length = 0;
-  };
-
   const addMessageFormat = (...formats) => {
     transformers.unshift(applyFormats(...formats));
   };
-  const clearMessageFormats = () => {
+
+  const addLevelTransformer = (...transformers) => {
+    transformers.unshift(...transformers);
+  };
+  const clearLevelTransformers = () => {
+    levelTransformers.length = 0;
+  };
+
+  const addMessageTransformer = (...transformers) => {
+    transformers.unshift(...transformers);
+  };
+  const clearMessageTransfomers = () => {
     transformers.length = 0;
   };
 
@@ -105,10 +112,13 @@ export const createConsoleLogger = createLogger((parent) => ({
     ...logMethods,
 
     addLevelFormat,
-    clearLevelFormats,
-
     addMessageFormat,
-    clearMessageFormats,
+
+    addLevelTransformer,
+    clearLevelTransformers,
+
+    addMessageTransformer,
+    clearMessageTransformers,
   };
 });
 
