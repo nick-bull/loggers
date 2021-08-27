@@ -1,8 +1,8 @@
-import {padDigits} from '#packages/number-utils';
+import {padDigits} from '#utils/number-utils';
 
 const padDoubleDigits = (n) => padDigits(n, 2);
 export const timestampTransformer = (
-  {level, loggerArguments, messages,  method},
+  {level, loggerArguments, messages, method},
 ) => {
   const now = new Date();
   const timepieces = [now.getHours(), now.getMinutes(), now.getSeconds()];
@@ -16,4 +16,3 @@ export const timestampTransformer = (
     method,
   };
 };
-

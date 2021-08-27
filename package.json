@@ -7,6 +7,8 @@
   "imports": {
     "#root": "./src",
     "#root/*": "./src/*",
+    "#utils": "./src/utils",
+    "#utils/*": "./src/utils/*",
     "#console": "./src/console",
     "#console/*": "./src/console/*",
     "#terminal": "./src/terminal",
@@ -43,21 +45,21 @@
   },
   "homepage": "https://github.com/nick-bull/loggers#readme",
   "scripts": {
-    "build": "babel src --out-dir lib",
-    "dev": "node --es-module-specifier-resolution=node src/index.js",
+    "build": "NODE_OPTIONS=--experimental-json-modules babel src --out-dir lib",
+    "dev": "node --experimental-json-modules --es-module-specifier-resolution=node src/index.js",
     "start": "node lib/index.js",
     "gh:push": "git push -u origin master",
     "prepublishOnly": "npm run build",
     "publish:public": "npm publish --access public",
-    "publish:patch": "npm run eslint && npm version patch && npm run publish:public",
-    "publish:minor": "npm run eslint && npm version minor && npm run publish:public",
-    "publish:major": "npm run eslint && npm version major && npm run publish:public",
+    "publish:patch": "npm run lint && npm version patch && npm run publish:public",
+    "publish:minor": "npm run lint && npm version minor && npm run publish:public",
+    "publish:major": "npm run lint && npm version major && npm run publish:public",
+    "lint": "npx eslint **/src/**/*.js",
+    "lint:files": "npm run eslint | grep ^[\\w/].*\\.js",
     "test": "jest --verbose --coverage --passWithNoTests",
     "test:update": "npm test --updateSnapshot",
     "test:watch": "jest --verbose --watch",
-    "test:coverage": "npm test && open ./coverage/lcov-report/index.html",
-    "eslint": "npx eslint **/src/**/*.js",
-    "eslint:files": "npm run eslint | grep ^[\\w/].*\\.js"
+    "test:coverage": "npm test && open ./coverage/lcov-report/index.html"
   },
   "dependencies": {
     "color": "^4.0.1"
@@ -70,6 +72,7 @@
     "@babel/runtime": "^7.13.10",
     "babel-jest": "^26.6.3",
     "babel-plugin-module-resolver": "^4.1.0",
+    "eslint-config-airbnb": "^18.2.1",
     "jest": "^26.6.3",
     "load-json-file": "^6.2.0",
     "prettier": "^2.2.1"

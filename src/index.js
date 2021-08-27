@@ -1,7 +1,7 @@
 export const logMethods = {
-  ERROR: "error",
-  LOG: "log",
-  WARN: "warn",
+  ERROR: 'error',
+  LOG: 'log',
+  WARN: 'warn',
 };
 
 export const logModeInfo = {
@@ -22,6 +22,7 @@ export const consoleMethods = {
   WARN: 'warn',
 };
 
+/*
 export const createModeOcclusionValidator = (
   includeModes = [],
   excludeModes = [],
@@ -31,28 +32,39 @@ export const createModeOcclusionValidator = (
 
   return isModeNotIncluded || isModeExcluded;
 };
+*/
 
 export const createLogger = (loggerBuilder) => (...args) => {
-  const state = {logLevel: 0};
+  const state = {excludeModes: [], includeModes: [], logLevel: 0};
 
   const setLogLevel = (level = 0) => {
     state.logLevel = level;
   };
 
   const excludeMode = (mode) => {
-    if (!logModes.includes(mode)) {
+    if (!defaultLogModes.includes(mode)) {
       throw new Error(`Invalid mode "${mode}"`);
     }
 
-    excludeModes.push(mode);
+    state.excludeModes.push(mode);
+  };
+
+  const isOccludedLogMode = (mode) => {
+    const included = state.includeModes;
+    const excluded = state.excludeModes;
+
+    const isModeNotIncluded = included.length && included.includes(mode);
+    const isModeExcluded = excluded.length && excluded.includes(mode);
+
+    return isModeNotIncluded || isModeExcluded;
   };
 
   const parent = {
-    state,
     excludeMode,
+    isOccludedLogMode,
     setLogLevel,
+    state,
   };
 
   return loggerBuilder(parent)(...args);
 };
-

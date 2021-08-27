@@ -1,4 +1,4 @@
-import {toRgb} from '#packages/color-utils';
+import {toRgb} from '#utils/color-utils';
 import {defaultBackgroundColors, defaultTextColors} from '#root/format';
 
 export const createBrowserFormatter = ({
@@ -7,7 +7,7 @@ export const createBrowserFormatter = ({
 }) => {
   const prependArgument = (info, argument) => {
     const {loggerArguments} = info;
-    
+
     return {
       ...info,
       loggerArguments: [...loggerArguments, argument],
@@ -24,29 +24,27 @@ export const createBrowserFormatter = ({
   const colorBackground = ([r = 0, g = 0, b = 0]) =>
     `backgroundColor: rgb(${r}, ${g}, ${b});`;
   */
-  const colorText = (color) => (info) => {
+  const textColor = (color) => (info) => {
     const {level} = info;
 
     const resolvedColor = color || textColors[level];
     const [r, g, b] = toRgb(resolvedColor);
 
-    const textColor = `color: rgb(${r}, ${g}, ${b});`;
-    return prependInfoArgument(info, textColor);
+    const textColorArgument = `color: rgb(${r}, ${g}, ${b});`;
+    return prependArgument(info, textColorArgument);
   };
-  const colorBackground = (color) => (info) => {
+  const backgroundColor = (color) => (info) => {
     const {level} = info;
     const resolvedColor = color || backgroundColors[level];
 
     const [r, g, b] = toRgb(resolvedColor);
-    const backgroundColor = `backgroundColor: rgb(${r}, ${g}, ${b});`;
+    const backgroundColorArgument = `backgroundColor: rgb(${r}, ${g}, ${b});`;
 
-    return prependInfoArgument(info, backgroundColor);
+    return prependArgument(info, backgroundColorArgument);
   };
   // const invertColors = (info) => prependArgument
 
-  const applyFormats = (...formats) => (info) => {
-    return formats.reduce(format => prependInfoArgument(info, format), '');
-  }
+  const applyFormats = (...formats) => (info) => formats.reduce((format) => prependArgument(info, format), '');
 
   return {
     bold,
@@ -60,4 +58,3 @@ export const createBrowserFormatter = ({
   };
 };
 export const browserFormatter = createBrowserFormatter();
-

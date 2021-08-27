@@ -1,4 +1,4 @@
-import {toRgb} from '#packages/color-utils';
+import {toRgb} from '#utils/color-utils';
 import {defaultBackgroundColors, defaultTextColors} from '#root/format';
 
 export const createTerminalFormatter = (
@@ -28,30 +28,26 @@ export const createTerminalFormatter = (
 
   const lowercase = (info) => {
     const {messages} = info;
-    const lowercaseMessages = messages.map(message => String(message).toLowerCase());
+    const lowercaseMessages = messages.map((message) => String(message).toLowerCase());
 
     return {
       ...info,
-      messages: lowercaseMessages
+      messages: lowercaseMessages,
     };
   };
 
   const uppercase = (info) => {
     const {messages} = info;
-    const uppercaseMessages = messages.map(message => String(message).toUpperCase());
+    const uppercaseMessages = messages.map((message) => String(message).toUpperCase());
 
     return {
       ...info,
-      messages: uppercaseMessages
+      messages: uppercaseMessages,
     };
   };
 
-  const appendFormatMessage = (info, message) => {
-    return appendMessage(info, createFormat(message));
-  };
-  const prependFormatMessage = (info, message) => {
-    return prependMessage(info, createFormat(message));
-  };
+  // const appendFormatMessage = (info, message) => appendMessage(info, createFormat(message));
+  const prependFormatMessage = (info, message) => prependMessage(info, createFormat(message));
 
   const bold = (info) => prependFormatMessage(info, '1');
   const italic = (info) => prependFormatMessage(info, '3');
@@ -106,4 +102,3 @@ export const createTerminalFormatter = (
   };
 };
 export const terminalFormatter = createTerminalFormatter();
-

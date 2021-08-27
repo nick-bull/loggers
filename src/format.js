@@ -41,4 +41,3 @@ export const defaultLevelFormat = {
   backgroundColor: defaultColors.lightGray,
   isBold: true,
 };
-
