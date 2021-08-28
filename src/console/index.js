@@ -41,22 +41,31 @@ export const createConsoleLogger = createLogger((parent) => ({
   const {state: {logLevel}, isOccludedLogMode} = parent;
   const state = {levelTransformers, transformers};
 
-  const addLevelFormat = (...formats) => {
+  const appendLevelFormat = (...formats) => {
     state.levelTransformers.unshift(applyFormats(...formats));
+  };
+  const prependLevelFormat = (...formats) => {
+    state.levelTransformers.push(applyFormats(...formats));
   };
   const addMessageFormat = (...formats) => {
     state.transformers.unshift(applyFormats(...formats));
   };
 
-  const addLevelTransformer = (...tx) => {
-    state.transformers.unshift(...tx);
+  const appendLevelTransformer = (...tx) => {
+    state.levelTransformers.unshift(...tx);
+  };
+  const prependLevelTransformer = (...tx) => {
+    state.levelTransformers.push(...tx);
   };
   const clearLevelTransformers = () => {
     state.levelTransformers.length = 0;
   };
 
-  const addMessageTransformer = (...tx) => {
+  const appendMessageTransformer = (...tx) => {
     state.transformers.unshift(...tx);
+  };
+  const prependMessageTransformer = (...tx) => {
+    state.transformers.push(...tx);
   };
   const clearMessageTransformers = () => {
     state.transformers.length = 0;
@@ -90,7 +99,7 @@ export const createConsoleLogger = createLogger((parent) => ({
     };
     const modeInfo = (isPrinted)
       ? state.levelTransformers.reduce(composeReducer, txLevelInfo)
-      : {};
+      : {method, mode};
 
     logMethod(messageInfo, modeInfo);
   };
@@ -104,13 +113,16 @@ export const createConsoleLogger = createLogger((parent) => ({
     ...parent,
     ...logMethods,
 
-    addLevelFormat,
+    appendLevelFormat,
+    prependLevelFormat,
     addMessageFormat,
 
-    addLevelTransformer,
+    appendLevelTransformer,
+    prependLevelTransformer,
     clearLevelTransformers,
 
-    addMessageTransformer,
+    appendMessageTransformer,
+    prependMessageTransformer,
     clearMessageTransformers,
   };
 });
