@@ -1,0 +1,11 @@
+- Hoist the following methods from `createConsoleLogger` to `createLogger`:
+    - `appendLevelFormat`,
+    - `prependLevelFormat`,
+    - `addMessageFormat`,
+    - `appendLevelTransformer`,
+    - `prependLevelTransformer`,
+    - `clearLevelTransformers`,
+    - `appendMessageTransformer`,
+    - `prependMessageTransformer`,
+    - `clearMessageTransformers` 
+
